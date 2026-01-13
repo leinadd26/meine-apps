@@ -1,7 +1,39 @@
 const DATA_KEY = 'lifeStatsData';
 const IMG_KEY = 'gymLogImages_v1'; // date -> dataURL (compressed)
+const SHEETS_UPLOAD_URL = 'https://script.google.com/macros/s/AKfycbxRZ3gq53WZLk3223CgFZDVXDlBq4_JKPWZy56W44Gvc_GWL6bc-xM3NPo1jRIpFCenWg/exec';
+const SECRET_KEY = 'gymLogSheetsSecret';
+
+
 
 let images = {};
+
+function getSecret() {
+  let s = localStorage.getItem(SECRET_KEY);
+  if (!s) {
+    s = prompt('Sheets Secret eingeben (wird lokal gespeichert):');
+    if (s) localStorage.setItem(SECRET_KEY, s);
+  }
+  return s;
+}
+
+async function uploadPhotoToSheets(date, dataUrl) {
+  const secret = getSecret();
+  if (!secret) throw new Error('no secret');
+
+  const fd = new FormData();
+  fd.append('secret', secret);
+  fd.append('action', 'uploadGymPhoto');
+  fd.append('date', date);
+  fd.append('imageData', dataUrl);
+
+  // no-cors: wir können die Antwort NICHT lesen, aber Sheets/Drive wird trotzdem beschrieben
+  await fetch(SHEETS_UPLOAD_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: fd
+  });
+}
+
 
 function loadImages() {
   try { images = JSON.parse(localStorage.getItem(IMG_KEY) || '{}'); }
@@ -184,6 +216,8 @@ function bind() {
     try {
       const dataUrl = await compressImageToDataURL(file);
       images[date] = dataUrl;
+      // zusätzlich in Sheets hochladen (best effort)
+      uploadPhotoToSheets(date, dataUrl).catch(() => {});
       saveImages();
       render();
     } catch (err) {
