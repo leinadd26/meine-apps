@@ -143,3 +143,8 @@ body {
     background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
     box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
 }
+
+.gymlog-card .app-icon {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
+}

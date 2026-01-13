@@ -1,4 +1,4 @@
-const CACHE = 'meine-apps-1.7.2';
+const CACHE = 'meine-apps-1.7.3';
 
 const FILES = [
     './',
@@ -23,6 +23,9 @@ const FILES = [
 './FortniteRanks/Champion.png',
 './FortniteRanks/Unreal.png',
 './FortniteRanks/Unranked.png',
+'./gymlog/index.html',
+'./gymlog/style.css',
+'./gymlog/app.js',
 ];
 
 self.addEventListener('install', e => {
