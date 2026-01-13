@@ -4,3 +4,6 @@ Gym Log
 -> Bilder hochladen + Datum
 -> Wenn bei stats eingetragen das gym dann automatisch fragt er nach xyz
 -> nur 1 datum gleichzeitig aufmachen
+
+
+Andere Provider
